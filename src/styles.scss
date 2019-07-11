@@ -1,0 +1,22 @@
+main {
+   width: 100%;
+   padding: 20px;
+}
+
+aside {
+   float: left;
+   width: 12%;
+   border: 1px solid #cfcfcf;
+   min-height: 500px;
+   margin: 100px 0px;
+}
+
+.results-wrapper { 
+   margin: 100px 100px 100px 50px;
+   float: right; 
+   width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    align-items: stretch;
+}
