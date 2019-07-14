@@ -3,6 +3,10 @@ import { State, FiltersTexts, IUserDetails, FiltersTypes, IFilterFunctions, IFil
 import "./styles.scss";
 import UserDetails from "./components/user-details/user-details.component";
 import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
+import { Range } from "rc-slider";
+import "rc-slider/assets/index.css";
+
+
 interface Props {}
 
 export default class FilterModule extends React.Component<Props> {
@@ -37,31 +41,33 @@ export default class FilterModule extends React.Component<Props> {
       inCompatibilityRange: {
         filter: "compatibility_score",
         text: "Compatibility Score",
-        start: 1,
-        end: 99,
-        value: null,
+        min: 1,
+        max: 99,
+        value: [],
         func: function(el: IUserDetails)  {
-          return el.compatibility_score === this.value;
+          return el.compatibility_score > this.value[0] &&  el.compatibility_score < this.value[1];
         }
       },
       inAgeRange: {
         filter: "age",
         text: "Age",
-        start: 18,
-        end: 95,
-        value: null,
-        func: function(el: IUserDetails) {
-          return el.age === this.value;
+        min: 18,
+        max: 95,
+        value: [],
+        func: (el: IUserDetails) => {
+          const { value } = this.state.filters.inAgeRange;
+
+          return el.age > value[0] &&  el.age < value[1];
         }
       },
       inHeightRange: {
         filter: "height_in_cm",
         text: "Height",
-        start: 135,
-        end: 210,
-        value: null,
+        min: 135,
+        max: 210,
+        value: [],
         func: function(el: IUserDetails) {
-          return el.height_in_cm === this.value;
+          return el.height_in_cm > this.value[0] &&  el.age < this.value[1];
         }
       },
       inMyLocation: {
@@ -88,13 +94,17 @@ export default class FilterModule extends React.Component<Props> {
         });
   }
 
-  handleCheckbox(value: any, filter: string) {
+  handleCheckbox(filter: string, value: string | boolean | number[]) {
     this.handleFilters(filter, value);
   }
 
-  handleFilters(filter: string, value: string | boolean | number) {
-    const { filters }: State = this.state;
+  handleRange(filter: string, value: string | boolean | number[]) {
+    this.handleFilters(filter, value);
+  }
 
+  handleFilters(filter: string, value: string | boolean | number[]) {
+    const { filters }: State = this.state;
+  
     switch (filter) {
       case FiltersTexts.hasPhoto:
           this.setState((state: State) => {
@@ -140,10 +150,38 @@ export default class FilterModule extends React.Component<Props> {
                 };
               }, () => this.checkFilters(value, filters.hasFavourite.func));
         break;
+
+        case FiltersTexts.inAgeRange:
+            this.setState((state: State) => {
+              return {
+                ...state,
+                filters: {
+                  ...state.filters,
+                  inAgeRange: {
+                    ...state.filters.inAgeRange,
+                   value: value
+                  }
+                },
+              };
+            }, () => this.checkFilters(value, filters.inAgeRange.func));
+      break;
     }
   }
 
-  private checkFilters(value: string | number | boolean, filterFunction: IFilterFunction) {
+  private checkFilters(value: string | number[] | boolean, filterFunction: IFilterFunction) {
+    const { filtered_data, data }: State = this.state;
+
+    if (value) {
+      this.applyFilters(filtered_data, [filterFunction] as Array<IFilterFunctions>, 0);
+    }
+    else {
+      const filterFunctions = this.getActiveFilters();
+
+      this.applyFilters(data, filterFunctions, filterFunctions.length - 1);
+    }
+  }
+
+  private checkRangeFilters(value: string | number[] | boolean, filterFunction: IFilterFunction) {
     const { filtered_data, data }: State = this.state;
 
     if (value) {
@@ -162,7 +200,8 @@ export default class FilterModule extends React.Component<Props> {
     const filterFunctions: IFilterFunctions[] = [];
 
         Object.keys(filterTypes).forEach((props) => {
-          if (filterTypes[props].value) {
+          if (filterTypes[props].value && filterTypes[props].value.lenght) {
+            console.log(filterTypes[props].value)
             filterFunctions.push(filterTypes[props].func);
           }
         });
@@ -185,22 +224,32 @@ export default class FilterModule extends React.Component<Props> {
   }
 
 render () {
+  const {inAgeRange, hasContact, hasFavourite, hasPhoto } = this.state.filters;
     return (
         <main>
           <header></header>
           <aside>
-            <FilterCheckbox filter={this.state.filters.hasContact.filter}
-                            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(e, filter)}
-                            text={this.state.filters.hasContact.text}>
+            <FilterCheckbox filter={hasContact.filter}
+                            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
+                            text={hasContact.text}>
             </FilterCheckbox>
-            <FilterCheckbox filter={this.state.filters.hasPhoto.filter}
-                            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(e, filter)}
-                            text={this.state.filters.hasPhoto.text}>
+            <FilterCheckbox filter={hasPhoto.filter}
+                            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
+                            text={hasPhoto.text}>
             </FilterCheckbox>
-            <FilterCheckbox filter={this.state.filters.hasFavourite.filter}
-                            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(e, filter)}
-                            text={this.state.filters.hasFavourite.text}>
+            <FilterCheckbox filter={hasFavourite.filter}
+                            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
+                            text={hasFavourite.text}>
             </FilterCheckbox>
+          <br></br>
+            <label>{ inAgeRange.text }
+            <Range min={inAgeRange.min}
+                   max={inAgeRange.max}
+                   defaultValue={[inAgeRange.min, inAgeRange.max]}
+                   onChange={(value) => this.handleRange(inAgeRange.filter, value)} />
+                  <small>{ inAgeRange.value[0] }- { inAgeRange.value[1] }</small>
+            </label>
+
           </aside>
           <div className="results-wrapper">
                 {this.state.filtered_data.map((match, index) => {

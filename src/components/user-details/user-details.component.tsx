@@ -23,6 +23,7 @@ return (
         </li>
         <li className="user-details__li --split-box">
             <span className="user-details__age">{ props.details.age }</span>
+            <br></br>
             <span className="user-details__height">{ props.details.height_in_cm }</span>
         </li>
         <li className="user-details__li"><span className="user-details__contacts">{ props.details.contacts_exchanged }</span></li>

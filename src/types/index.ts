@@ -4,11 +4,11 @@ export enum FiltersTexts  {
     hasPhoto = "main_photo",
     hasContact = "contacts_exchanged",
     hasFavourite = "favourite",
-    compatibility_score = "compatibility_score",
-    age = "age",
-    height_in_cm = "height_in_cm",
-    city_name = "my_location",
-  };
+    inCompatibilityRange = "compatibility_score",
+    inAgeRange = "age",
+    inHeightRange = "height_in_cm",
+    inMyLocation = "city_name",
+  }
 
 export interface FiltersTypes  {
     hasPhoto: BooleanFilters;
@@ -41,9 +41,9 @@ export type StringFilters = {
 export type IntegerFilters = {
     filter: string;
     text: string;
-    start: number;
-    end: number;
-    value: number | null;
+    min: number;
+    max: number;
+    value: Array<number>;
     func: IFilterFunction;
 };
 
