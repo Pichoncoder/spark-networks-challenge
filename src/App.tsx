@@ -1,5 +1,5 @@
 import React from "react";
-import { State, FiltersTexts, IUserDetails, FiltersTypes, IFilterFunctions, FilterTypesKey, FilteredData} from "./types";
+import { State, FiltersTexts, IUserDetails, FiltersTypes, IFilterFunctions, IFilterFunction, FilteredData} from "./types";
 import "./styles.scss";
 import UserDetails from "./components/user-details/user-details.component";
 import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
@@ -75,9 +75,6 @@ export default class FilterModule extends React.Component<Props> {
   }
 };
 
-countAppliedFilters = 0;
-filterFunctions = [];
-
   componentDidMount() {
     this.fetchMatches();
   }
@@ -96,7 +93,7 @@ filterFunctions = [];
   }
 
   handleFilters(filter: string, value: string | boolean | number) {
-    const { filtered_data, data, filters}: any = this.state;
+    const { filters }: State = this.state;
 
     switch (filter) {
       case FiltersTexts.hasPhoto:
@@ -111,14 +108,7 @@ filterFunctions = [];
                 }
               },
             };
-          }, () => {
-            if (value) { // true applied right away
-              this.applyFilters(filtered_data, [filters.hasPhoto.func], 0);
-
-            } else { // remove  right away
-              this.checkFilters();
-            }
-        });
+          }, () => this.checkFilters(value, filters.hasPhoto.func));
           break;
 
       case FiltersTexts.hasContact:
@@ -133,14 +123,7 @@ filterFunctions = [];
                 }
               },
             };
-          }, () => {
-              if (value) {  
-                this.applyFilters(filtered_data, [filters.hasContact.func], 0);
-
-              } else {  
-                this.checkFilters();
-              }
-          });
+          }, () => this.checkFilters(value, filters.hasContact.func));
         break;
 
        case FiltersTexts.hasFavourite:
@@ -155,20 +138,26 @@ filterFunctions = [];
                     }
                   },
                 };
-              }, () => {
-                  if (value) {  
-                    this.applyFilters(filtered_data, [filters.hasFavourite.func], 0);
-    
-                  } else { 
-                    this.checkFilters();
-                  }
-              });
+              }, () => this.checkFilters(value, filters.hasFavourite.func));
         break;
     }
   }
 
-  checkFilters() {
-    const { data, filters } = this.state;
+  private checkFilters(value: string | number | boolean, filterFunction: IFilterFunction) {
+    const { filtered_data, data }: State = this.state;
+
+    if (value) {
+      this.applyFilters(filtered_data, [filterFunction] as Array<IFilterFunctions>, 0);
+    }
+    else {
+      const filterFunctions = this.getActiveFilters();
+
+      this.applyFilters(data, filterFunctions, filterFunctions.length - 1);
+    }
+  }
+
+  private getActiveFilters() {
+    const { filters } = this.state;
     const {...filterTypes }: any = filters;
     const filterFunctions: IFilterFunctions[] = [];
 
@@ -178,7 +167,7 @@ filterFunctions = [];
           }
         });
 
-        this.applyFilters(data, filterFunctions, filterFunctions.length - 1);
+        return filterFunctions;
   }
 
   applyFilters(data: FilteredData, filterFunc: IFilterFunctions[], lenght: number) {

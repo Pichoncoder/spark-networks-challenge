@@ -44,12 +44,16 @@ export type IntegerFilters = {
     start: number;
     end: number;
     value: number | null;
-    func: (el: IUserDetails) => boolean;
+    func: IFilterFunction;
 };
 
-export interface IFilterFunctions extends Array<Function> {
+export interface IFilterFunction {
     (el: IUserDetails): boolean;
-};
+}
+
+export interface IFilterFunctions extends Array<IFilterFunction> {
+    (el: IUserDetails): boolean;
+}
 
 export type State = {
     data: FilteredData,
