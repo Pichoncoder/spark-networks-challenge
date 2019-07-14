@@ -3,12 +3,9 @@ import { UserProps } from "../../types";
 import "./user-details.component.scss";
 
 const UserDetails: React.FC<UserProps> = (props: UserProps) => {
-  
-
 
 return (
 <div className="user-details card">
-
     <div className="user-details__pic">
         <img className="user-details__pic-img" src={props.details.main_photo  ? props.details.main_photo  : "https://via.placeholder.com/100"}></img>
     </div>
