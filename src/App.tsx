@@ -152,7 +152,11 @@ export default class FilterModule extends React.Component<Props> {
         break;
 
         case FiltersTexts.inAgeRange:
+          let prevValues: number[];
+          
             this.setState((state: State) => {
+               [...prevValues] = state.filters.inAgeRange.value;
+
               return {
                 ...state,
                 filters: {
@@ -163,7 +167,7 @@ export default class FilterModule extends React.Component<Props> {
                   }
                 },
               };
-            }, () => this.checkFilters(value, filters.inAgeRange.func));
+            }, () => this.checkRangeFilters(value as Array<number>, prevValues as Array<number>, filters.inAgeRange.func));
       break;
     }
   }
@@ -181,22 +185,21 @@ export default class FilterModule extends React.Component<Props> {
     }
   }
 
-  private checkRangeFilters(value: string | number[] | boolean, filterFunction: IFilterFunction) {
+  private checkRangeFilters(value: number[], prev: number[], filterFunction: IFilterFunction) {
     const { filtered_data, data }: State = this.state;
 
-    if (value) {
+    if (value[0] > prev[0] || value[1] < prev[1]) {
       this.applyFilters(filtered_data, [filterFunction] as Array<IFilterFunctions>, 0);
-    }
-    else {
+      console.log('USE FILTERED DATA');
+    } else {
       const filterFunctions = this.getActiveFilters();
-
+ console.log('USE SOURCE DATA');
       this.applyFilters(data, filterFunctions, filterFunctions.length - 1);
     }
   }
 
   private getActiveFilters() {
-    const { filters } = this.state;
-    const {...filterTypes }: any = filters;
+    const {...filterTypes }: any = this.state.filters;
     const filterFunctions: IFilterFunctions[] = [];
 
         Object.keys(filterTypes).forEach((props) => {
@@ -223,6 +226,23 @@ export default class FilterModule extends React.Component<Props> {
       }
   }
 
+  applyFilters2(data: FilteredData, filterFunc: IFilterFunctions[], lenght: number): FilteredData {
+    if (lenght >= 0) {
+      this.applyFilters(data.filter((el: IUserDetails) => filterFunc[lenght](el)), filterFunc, lenght - 1);
+    } else {
+      return data;
+    }
+}
+
+saveFilteredState(data: FilteredData) {
+  this.setState((state) => {
+    return {
+      ...state,
+      filtered_data: data
+    };
+  });
+}
+
 render () {
   const {inAgeRange, hasContact, hasFavourite, hasPhoto } = this.state.filters;
     return (
@@ -247,7 +267,7 @@ render () {
                    max={inAgeRange.max}
                    defaultValue={[inAgeRange.min, inAgeRange.max]}
                    onChange={(value) => this.handleRange(inAgeRange.filter, value)} />
-                  <small>{ inAgeRange.value[0] }- { inAgeRange.value[1] }</small>
+                  <small>{ inAgeRange.value[0] } - { inAgeRange.value[1] }</small>
             </label>
 
           </aside>
