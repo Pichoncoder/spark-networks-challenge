@@ -1,19 +1,17 @@
 import React, { ChangeEvent } from "react";
-import { FilterCheckboxProps, IUserDetails, FilteredData } from "../../../types/index";
-const FilterCheckbox: React.FC<FilterCheckboxProps> = (props: FilterCheckboxProps) => {
+import { IFilterCheckboxProps } from "../../../types/index";
+
+const FilterCheckbox: React.FC<IFilterCheckboxProps> = (props: IFilterCheckboxProps) => {
     const { handleCheckbox, text, filter } = props;
 
-    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-       handleCheckbox(e.target.checked, filter);
-    };
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => handleCheckbox(e.target.checked, filter);
 
   return (
-    <label> {text}
-    <input
-      type="checkbox"
-      onChange={handleOnChange}
-    />
-  </label>
+    <li className="filter-element">
+      <label> {text}
+        <input type="checkbox" onChange={handleOnChange} />
+      </label>
+    </li>
   );
 };
 

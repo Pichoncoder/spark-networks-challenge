@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
+<li
+  className="filter-element"
+>
+  <label>
+     
+    Photo
+    <input
+      onChange={[Function]}
+      type="checkbox"
+    />
+  </label>
+</li>
+`;

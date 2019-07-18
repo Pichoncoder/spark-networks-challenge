@@ -35,7 +35,7 @@ export type StringFilters = {
     filter: string;
     text: string;
     value: string,
-     func: (el: IUserDetails) => boolean;
+    func: (el: IUserDetails) => boolean;
 };
 
 export type NumericFilters = {
@@ -86,9 +86,18 @@ export type IFilteringFunctionDefault = {
     (el: IUserDetails | null, filter?: string): false;
 };
 
-export interface FilterCheckboxProps  {
+export interface IFilterCheckboxProps  {
     handleCheckbox: (e: any, filter: string) => void;
     filter: string;
     text: string;
+}
+
+export interface IFilterRangeProps  {
+    handleRange: (e: any, filter: string) => void;
+    min: number;
+    max: number;
+    filter: string;
+    text: string;
+    value: number[];
 }
 

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FilterRange /> spec Snapshot:renders the component 1`] = `
+<li
+  className="filter-element"
+>
+  <label>
+    Age
+    <div
+      className="rc-slider"
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      onTouchStart={[Function]}
+    >
+      <div
+        className="rc-slider-rail"
+        style={Object {}}
+      />
+      <div
+        className="rc-slider-track rc-slider-track-1"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+      <div
+        className="rc-slider-step"
+      />
+      <div
+        aria-disabled={false}
+        aria-valuemax={99}
+        aria-valuemin={18}
+        aria-valuenow={18}
+        className="rc-slider-handle rc-slider-handle-1"
+        onBlur={[Function]}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        aria-disabled={false}
+        aria-valuemax={99}
+        aria-valuemin={18}
+        aria-valuenow={99}
+        className="rc-slider-handle rc-slider-handle-2"
+        onBlur={[Function]}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rc-slider-mark"
+      />
+    </div>
+    <small>
+       - 
+    </small>
+  </label>
+</li>
+`;
