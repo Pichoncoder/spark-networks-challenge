@@ -1,83 +1,32 @@
 import React from "react";
-import { State, FiltersTexts, IUserDetails, FiltersTypes, IFilterFunctions, IFilterFunction, FilteredData} from "./types";
+import { State, FiltersProperties, IUserDetails, FiltersTypes, IFilterFunctions, IFilterFunction, FilteredData} from "./types";
 import "./styles.scss";
 import UserDetails from "./components/user-details/user-details.component";
 import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
 import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
+import {
+  has_contact,
+  has_photo,
+  in_age_range,
+  in_compatibility_range,
+  is_favourite,
+  in_height_range,
+  in_my_location
+} from "./utils/filters/models";
 
-
-interface Props {}
-
-export default class FilterModule extends React.Component<Props> {
+export default class FilterModule extends React.Component {
   state: State = {
     data: [],
     filtered_data: [],
     filters : {
-      hasPhoto: {
-        filter: "main_photo",
-        text: "Has Photo",
-        value: false,
-        func: function(el: IUserDetails) {
-          return !!el.main_photo;
-        },
-      },
-      hasFavourite: {
-        filter: "favourite",
-        text: "Favourite",
-        value: false,
-        func: function(el: IUserDetails) {
-          return !!el.favourite;
-        }
-      },
-      hasContact: {
-        filter: "contacts_exchanged",
-        text: "In contact",
-        value: false,
-        func: function(el: IUserDetails) {
-          return !!el.contacts_exchanged;
-        }
-      },
-      inCompatibilityRange: {
-        filter: "compatibility_score",
-        text: "Compatibility Score",
-        min: 1,
-        max: 99,
-        value: [],
-        func: function(el: IUserDetails)  {
-          return el.compatibility_score > this.value[0] &&  el.compatibility_score < this.value[1];
-        }
-      },
-      inAgeRange: {
-        filter: "age",
-        text: "Age",
-        min: 18,
-        max: 95,
-        value: [],
-        func: (el: IUserDetails) => {
-          const { value } = this.state.filters.inAgeRange;
-
-          return el.age > value[0] &&  el.age < value[1];
-        }
-      },
-      inHeightRange: {
-        filter: "height_in_cm",
-        text: "Height",
-        min: 135,
-        max: 210,
-        value: [],
-        func: function(el: IUserDetails) {
-          return el.height_in_cm > this.value[0] &&  el.age < this.value[1];
-        }
-      },
-      inMyLocation: {
-        filter: "city_name",
-        text: "distance in km",
-        value: '',
-        func: function(el: IUserDetails) {
-          return el.city.name === this.value;
-        }
-      }
+      has_photo,
+      is_favourite,
+      has_contact,
+      in_my_location,
+      in_compatibility_range,
+      in_age_range,
+      in_height_range,
   }
 };
 
@@ -106,68 +55,68 @@ export default class FilterModule extends React.Component<Props> {
     const { filters }: State = this.state;
   
     switch (filter) {
-      case FiltersTexts.hasPhoto:
+      case FiltersProperties.has_photo:
           this.setState((state: State) => {
             return {
               ...state,
               filters: {
                 ...state.filters,
-                hasPhoto: {
-                  ...state.filters.hasPhoto,
+                has_photo: {
+                  ...state.filters.has_photo,
                   value: value
                 }
               },
             };
-          }, () => this.checkFilters(value, filters.hasPhoto.func));
+          }, () => this.checkFilters(value, filters.has_photo.func));
           break;
 
-      case FiltersTexts.hasContact:
+      case FiltersProperties.has_contact:
           this.setState((state: State) => {
             return {
               ...state,
               filters: {
                 ...state.filters,
-                hasContact: {
-                  ...state.filters.hasContact,
+                has_contact: {
+                  ...state.filters.has_contact,
                   value: value
                 }
               },
             };
-          }, () => this.checkFilters(value, filters.hasContact.func));
+          }, () => this.checkFilters(value, filters.has_contact.func));
         break;
 
-       case FiltersTexts.hasFavourite:
+       case FiltersProperties.is_favourite:
               this.setState((state: State) => {
                 return {
                   ...state,
                   filters: {
                     ...state.filters,
-                    hasFavourite: {
-                      ...state.filters.hasFavourite,
+                    is_favourite: {
+                      ...state.filters.is_favourite,
                       value: value
                     }
                   },
                 };
-              }, () => this.checkFilters(value, filters.hasFavourite.func));
+              }, () => this.checkFilters(value, filters.is_favourite.func));
         break;
 
-        case FiltersTexts.inAgeRange:
+        case FiltersProperties.in_age_range:
           let prevValues: number[];
           
             this.setState((state: State) => {
-               [...prevValues] = state.filters.inAgeRange.value;
+               [...prevValues] = state.filters.in_age_range.value;
 
               return {
                 ...state,
                 filters: {
                   ...state.filters,
-                  inAgeRange: {
-                    ...state.filters.inAgeRange,
+                  in_age_range: {
+                    ...state.filters.in_age_range,
                    value: value
                   }
                 },
               };
-            }, () => this.checkRangeFilters(value as Array<number>, prevValues as Array<number>, filters.inAgeRange.func));
+            }, () => this.checkRangeFilters(value as Array<number>, prevValues as Array<number>, filters.in_age_range.func));
       break;
     }
   }
@@ -190,10 +139,10 @@ export default class FilterModule extends React.Component<Props> {
 
     if (value[0] > prev[0] || value[1] < prev[1]) {
       this.applyFilters(filtered_data, [filterFunction] as Array<IFilterFunctions>, 0);
-      console.log('USE FILTERED DATA');
+
     } else {
       const filterFunctions = this.getActiveFilters();
- console.log('USE SOURCE DATA');
+
       this.applyFilters(data, filterFunctions, filterFunctions.length - 1);
     }
   }
@@ -244,30 +193,30 @@ saveFilteredState(data: FilteredData) {
 }
 
 render () {
-  const {inAgeRange, hasContact, hasFavourite, hasPhoto } = this.state.filters;
+  const { in_age_range, has_contact, is_favourite, has_photo } = this.state.filters;
     return (
         <main>
           <header></header>
           <aside>
-            <FilterCheckbox filter={hasContact.filter}
+            <FilterCheckbox filter={has_contact.filter}
                             handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
-                            text={hasContact.text}>
+                            text={has_contact.text}>
             </FilterCheckbox>
-            <FilterCheckbox filter={hasPhoto.filter}
+            <FilterCheckbox filter={has_photo.filter}
                             handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
-                            text={hasPhoto.text}>
+                            text={has_photo.text}>
             </FilterCheckbox>
-            <FilterCheckbox filter={hasFavourite.filter}
+            <FilterCheckbox filter={is_favourite.filter}
                             handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
-                            text={hasFavourite.text}>
+                            text={is_favourite.text}>
             </FilterCheckbox>
           <br></br>
-            <label>{ inAgeRange.text }
-            <Range min={inAgeRange.min}
-                   max={inAgeRange.max}
-                   defaultValue={[inAgeRange.min, inAgeRange.max]}
-                   onChange={(value) => this.handleRange(inAgeRange.filter, value)} />
-                  <small>{ inAgeRange.value[0] } - { inAgeRange.value[1] }</small>
+            <label>{ in_age_range.text }
+            <Range min={in_age_range.min}
+                   max={in_age_range.max}
+                   defaultValue={[in_age_range.min, in_age_range.max]}
+                   onChange={(value) => this.handleRange(in_age_range.filter, value)} />
+                  <small>{ in_age_range.value[0] } - { in_age_range.value[1] }</small>
             </label>
 
           </aside>
