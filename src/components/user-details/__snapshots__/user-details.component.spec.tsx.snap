@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserDetails /> spec Snapshot:check the component 1`] = `
+<div
+  className="user-details card"
+>
+  <div
+    className="user-details__pic"
+  >
+    <img
+      alt="Chuck"
+      className="user-details__pic-img"
+      src="https://via.placeholder.com/100"
+    />
+  </div>
+  <ul
+    className="user-details__box --top-info"
+  >
+    <li
+      className="user-details__li"
+    >
+      <span
+        className="user-details__name"
+      >
+        Chuck
+      </span>
+    </li>
+    <li
+      className="user-details__li"
+    >
+      <span
+        className="user-details__job"
+      >
+        Ninja
+      </span>
+    </li>
+    <li
+      className="user-details__li"
+    >
+      <span
+        className="user-details__fav"
+      />
+    </li>
+  </ul>
+  <ul
+    className="user-details__box --buttom-info"
+  >
+    <li
+      className="user-details__li --split-box"
+    >
+      <span
+        className="user-details__religion"
+      >
+        Jew
+      </span>
+    </li>
+    <li
+      className="user-details__li --split-box"
+    >
+      <span
+        className="user-details__age"
+      >
+        33
+      </span>
+      <br />
+      <span
+        className="user-details__height"
+      >
+        170
+      </span>
+    </li>
+    <li
+      className="user-details__li"
+    >
+      <span
+        className="user-details__contacts"
+      >
+        0
+      </span>
+    </li>
+    <li
+      className="user-details__li"
+    >
+      <span
+        className="user-details__score"
+      >
+        3
+      </span>
+    </li>
+  </ul>
+</div>
+`;
