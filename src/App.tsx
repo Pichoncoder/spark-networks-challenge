@@ -1,6 +1,8 @@
 import React from "react";
 import { isArray } from "util";
+import "./styles.scss";
 
+// Types
 import {
   State,
   FiltersProperties,
@@ -18,6 +20,7 @@ import UserDetails from "./components/user-details/user-details.component";
 import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
 import FilterRange from "./components/filters/filter-range/filter-range.component";
 
+// Models
 import {
   has_contact,
   has_photo,
@@ -27,10 +30,6 @@ import {
   in_compatibility_range_model,
   in_height_range_model
 } from "./utils/filters/models";
-
-import { rageFilter } from "./utils/filters/functions"
-
-import "./styles.scss";
 
 export default class FilterModule extends React.Component {
  
@@ -72,7 +71,8 @@ export default class FilterModule extends React.Component {
 
   handleFilters(filter: string, value: any) {
     const { filters }: State = this.state;
-    const hasRangeChanged = (prev: number[]) => value[0] > prev[0] || value[1] < prev[1];
+
+    const hasRangeChanged = (prev: number[], _value: number[]) => _value[0] > prev[0] || _value[1] < prev[1];
 
     const parseDecimal = (numberVal:number) =>parseFloat((numberVal / 100).toFixed(2));
 
@@ -138,13 +138,14 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(hasRangeChanged(prevValues), filters.in_age_range.func));
+        }, () => this.checkFilters(hasRangeChanged(prevValues, value), filters.in_age_range.func));
         break;
       case FiltersProperties.in_compatibility_range:
+          const [min, max] = value;
+          const decimalValue: number[] = [parseDecimal(min), parseDecimal(max)];
+
         this.setState((state: State) => {
           [...prevValues] = state.filters.in_compatibility_range.value;
-          const [min, max] = value;
-          const decimalValue = [parseDecimal(min), parseDecimal(max)]
 
           return {
             ...state,
@@ -152,11 +153,11 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               in_compatibility_range: {
                 ...state.filters.in_compatibility_range,
-                value:decimalValue
+                value: decimalValue
               }
             },
           };
-        }, () => this.checkFilters(hasRangeChanged(prevValues), filters.in_compatibility_range.func));
+        }, () => this.checkFilters(hasRangeChanged(prevValues, decimalValue), filters.in_compatibility_range.func));
         break;
       case FiltersProperties.in_height_range:
         this.setState((state: State) => {
@@ -168,21 +169,22 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               in_height_range: {
                 ...state.filters.in_height_range,
-                value: value
+                value
               }
             },
           };
-        }, () => this.checkFilters(hasRangeChanged(prevValues), filters.in_height_range.func));
+        }, () => this.checkFilters(hasRangeChanged(prevValues, value), filters.in_height_range.func));
         break;
     }
   }
 
   checkFilters(value: boolean, filterFunction: IFilterFunction) {
     const { filtered_data, data }: State = this.state;
+    const src = (value) ? filtered_data : data;
 
     this.getFilteredData(
       value,
-      (value) ? filtered_data : data,
+      src,
       filterFunction,
       (new_filtered_data: FilteredData) => this.saveFilteredState(new_filtered_data));
   }
@@ -250,7 +252,7 @@ export default class FilterModule extends React.Component {
 
   render() {
     const { filters }: any = this.state;
-    
+
     return (
       <main>
         <header></header>
