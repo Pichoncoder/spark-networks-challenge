@@ -1,24 +1,39 @@
 import React from "react";
-import { Range } from "rc-slider";
-import { State, FiltersProperties, IUserDetails, FiltersTypes, IFilterFunctions, IFilterFunction, FilteredData } from "./types";
+import { isArray } from "util";
+
+import {
+  State,
+  FiltersProperties,
+  IUserDetails,
+  IFilterRangeProps,
+  FiltersTypes,
+  IFilterCheckboxProps,
+  IFilterFunctions,
+  IFilterFunction,
+  FilteredData
+} from "./types";
 
 // Components
 import UserDetails from "./components/user-details/user-details.component";
 import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
+import FilterRange from "./components/filters/filter-range/filter-range.component";
 
 import {
   has_contact,
   has_photo,
-  in_age_range,
-  in_compatibility_range,
   is_favourite,
-  in_height_range,
-  in_my_location
+  in_my_location,
+  in_age_range_model,
+  in_compatibility_range_model,
+  in_height_range_model
 } from "./utils/filters/models";
-import "rc-slider/assets/index.css";
+
+import { rageFilter } from "./utils/filters/functions"
+
 import "./styles.scss";
 
 export default class FilterModule extends React.Component {
+ 
   state: State = {
     data: [],
     filtered_data: [],
@@ -27,9 +42,18 @@ export default class FilterModule extends React.Component {
       is_favourite,
       has_contact,
       in_my_location,
-      in_compatibility_range,
-      in_age_range,
-      in_height_range,
+      in_compatibility_range: {
+        ...in_compatibility_range_model,
+        func: (el: IUserDetails) => in_compatibility_range_model.func(el, this.state.filters),
+      },
+      in_age_range: {
+        ...in_age_range_model,
+        func: (el: IUserDetails) => in_age_range_model.func(el, this.state.filters),
+      },
+      in_height_range: {
+        ...in_height_range_model,
+        func: (el: IUserDetails) => in_height_range_model.func(el, this.state.filters),
+      },
     }
   };
 
@@ -46,17 +70,11 @@ export default class FilterModule extends React.Component {
         });
   }
 
-  handleCheckbox(filter: string, value: string | boolean | number[]) {
-    this.handleFilters(filter, value);
-  }
-
-  handleRange(filter: string, value: string | boolean | number[]) {
-    this.handleFilters(filter, value);
-  }
-
   handleFilters(filter: string, value: any) {
     const { filters }: State = this.state;
     const hasRangeChanged = (prev: number[]) => value[0] > prev[0] || value[1] < prev[1];
+
+    const parseDecimal = (numberVal:number) =>parseFloat((numberVal / 100).toFixed(2));
 
     let prevValues: number[];
 
@@ -69,7 +87,7 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               has_photo: {
                 ...state.filters.has_photo,
-                value: value
+                value
               }
             },
           };
@@ -84,7 +102,7 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               has_contact: {
                 ...state.filters.has_contact,
-                value: value
+                value
               }
             },
           };
@@ -99,7 +117,7 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               is_favourite: {
                 ...state.filters.is_favourite,
-                value: value
+                value
               }
             },
           };
@@ -116,7 +134,7 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               in_age_range: {
                 ...state.filters.in_age_range,
-                value: value
+                value
               }
             },
           };
@@ -125,6 +143,8 @@ export default class FilterModule extends React.Component {
       case FiltersProperties.in_compatibility_range:
         this.setState((state: State) => {
           [...prevValues] = state.filters.in_compatibility_range.value;
+          const [min, max] = value;
+          const decimalValue = [parseDecimal(min), parseDecimal(max)]
 
           return {
             ...state,
@@ -132,11 +152,27 @@ export default class FilterModule extends React.Component {
               ...state.filters,
               in_compatibility_range: {
                 ...state.filters.in_compatibility_range,
-                value: value
+                value:decimalValue
               }
             },
           };
         }, () => this.checkFilters(hasRangeChanged(prevValues), filters.in_compatibility_range.func));
+        break;
+      case FiltersProperties.in_height_range:
+        this.setState((state: State) => {
+          [...prevValues] = state.filters.in_height_range.value;
+
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              in_height_range: {
+                ...state.filters.in_height_range,
+                value: value
+              }
+            },
+          };
+        }, () => this.checkFilters(hasRangeChanged(prevValues), filters.in_height_range.func));
         break;
     }
   }
@@ -191,34 +227,43 @@ export default class FilterModule extends React.Component {
     });
   }
 
+  getFilterCheckbox({ filter, text }: IFilterCheckboxProps, index: number) {
+    return <FilterCheckbox
+      key={index}
+      filter={filter}
+      text={text}
+      handleCheckbox={(filter: string, value: any) => this.handleFilters(filter, value)}>
+    </FilterCheckbox>
+  }
+
+  getFilterRange({ filter, text, value, min, max }: IFilterRangeProps, index: number) {
+    return <FilterRange
+      key={index}
+      filter={filter}
+      text={text}
+      value={value}
+      min={min}
+      max={max}
+      handleRange={(filter: string, value: any) => this.handleFilters(filter, value)}>
+    </FilterRange>
+  }
+
   render() {
-    const { in_age_range, has_contact, is_favourite, has_photo } = this.state.filters;
+    const { filters }: any = this.state;
+    
     return (
       <main>
         <header></header>
         <aside>
-          <FilterCheckbox filter={has_contact.filter}
-            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
-            text={has_contact.text}>
-          </FilterCheckbox>
-          <FilterCheckbox filter={has_photo.filter}
-            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
-            text={has_photo.text}>
-          </FilterCheckbox>
-          <FilterCheckbox filter={is_favourite.filter}
-            handleCheckbox={(e: any, filter: string) => this.handleCheckbox(filter, e)}
-            text={is_favourite.text}>
-          </FilterCheckbox>
-          <br></br>
-          <label>{in_age_range.text}
-            <Range min={in_age_range.min}
-              max={in_age_range.max}
-              defaultValue={[in_age_range.min, in_age_range.max]}
-              onChange={(value) => this.handleRange(in_age_range.filter, value)} />
-            <small>{in_age_range.value[0]} - {in_age_range.value[1]}</small>
-          </label>
+          <ul>
+            {Object.keys(filters).map((type, index) => {
+              const { value } = filters[type];
 
+              return (isArray(value)) ? this.getFilterRange(filters[type], index) : this.getFilterCheckbox(filters[type], index);
+            })}
+          </ul>
         </aside>
+
         <div className="results-wrapper">
           {this.state.filtered_data.map((match, index) => {
             return <UserDetails details={match} key={index}></UserDetails>;

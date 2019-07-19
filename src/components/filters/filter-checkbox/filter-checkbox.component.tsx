@@ -4,7 +4,7 @@ import { IFilterCheckboxProps } from "../../../types/index";
 const FilterCheckbox: React.FC<IFilterCheckboxProps> = (props: IFilterCheckboxProps) => {
     const { handleCheckbox, text, filter } = props;
 
-    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => handleCheckbox(e.target.checked, filter);
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => handleCheckbox(filter, e.target.checked);
 
   return (
     <li className="filter-element">

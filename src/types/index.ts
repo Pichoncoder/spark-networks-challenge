@@ -48,7 +48,7 @@ export type NumericFilters = {
 };
 
 export interface IFilterFunction {
-    (el: IUserDetails): boolean;
+    (el: IUserDetails, value?: any): boolean;
 }
 
 export interface IFilterFunctions extends Array<IFilterFunction> {
@@ -69,15 +69,6 @@ export interface UserProps {
 
 export interface IUserDetails extends Match {}
 
-export interface IFilters {
-    main_photo: boolean;
-    favourite: false;
-    height_in_cm: null;
-    compatibility_score: null;
-    contacts_exchanged: false;
-    age: null;
-}
-
 export type IFilteringFunction = {
     (el: IUserDetails | null, filter?: string): boolean | undefined
 } | IFilteringFunctionDefault;
@@ -87,13 +78,13 @@ export type IFilteringFunctionDefault = {
 };
 
 export interface IFilterCheckboxProps  {
-    handleCheckbox: (e: any, filter: string) => void;
+    handleCheckbox: (filter: string, value: any) => void;
     filter: string;
     text: string;
 }
 
 export interface IFilterRangeProps  {
-    handleRange: (e: any, filter: string) => void;
+    handleRange: (filter: string, value: number[]) => void;
     min: number;
     max: number;
     filter: string;

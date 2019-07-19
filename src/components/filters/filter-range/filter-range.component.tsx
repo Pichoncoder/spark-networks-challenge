@@ -5,7 +5,7 @@ import { Range } from "rc-slider";
 const FilterRange: React.FC<IFilterRangeProps> = (props: IFilterRangeProps) => {
     const { handleRange, text, filter, value, min , max } = props;
 
-    const handleOnChange = (value: number[]) => handleRange(value, filter);
+    const handleOnChange = (value: number[]) => handleRange(filter, value);
 
     return (
         <li className="filter-element">
