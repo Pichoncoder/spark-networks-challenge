@@ -9,13 +9,9 @@ module.exports = {
 		},
 	},
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-	// transform: {
-	// 	'^.+\\.(ts|tsx)$': 'babel-jest',
-	// },
 	transform: {
 		"^.+\\.jsx$": "babel-jest",
 		"^.+\\.js$" : "babel-jest"
-	//	'^.+\\.(ts|tsx)$': 'ts-jest',
 	  },
 	testMatch: [
 		'**/*.spec.(ts|tsx)'
@@ -26,7 +22,7 @@ module.exports = {
 		"<rootDir>/test/setupTests.ts"
 	  ],
 	  moduleNameMapper:{
-		"\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+		"\\.(css|less|sass|scss)$": "<rootDir>/test/__mocks__/styleMock.js",
    	},
 	transformIgnorePatterns: ['../node_modules/']
 };

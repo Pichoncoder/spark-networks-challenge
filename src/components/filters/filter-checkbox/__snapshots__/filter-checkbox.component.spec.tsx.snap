@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
+exports[`<FilterCheckbox /> spec 1#Click on checkbox and state update its value 1`] = `
 <li
-  className="filter-element checkbox-filter"
+  className="filter-element checkbox-filter has_photo"
 >
   <label
     className="filter-element__text"
@@ -11,6 +11,28 @@ exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
     Photo
     <input
       className="filter-element__checkbox"
+      id="has_photo"
+      name="has_photo"
+      onChange={[Function]}
+      type="checkbox"
+    />
+  </label>
+</li>
+`;
+
+exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
+<li
+  className="filter-element checkbox-filter has_photo"
+>
+  <label
+    className="filter-element__text"
+  >
+     
+    Photo
+    <input
+      className="filter-element__checkbox"
+      id="has_photo"
+      name="has_photo"
       onChange={[Function]}
       type="checkbox"
     />

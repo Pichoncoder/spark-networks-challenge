@@ -55,7 +55,9 @@ exports[`<UserDetails /> spec Snapshot:check the component 1`] = `
       </span>
       <span
         className="user-details__city"
-      />
+      >
+        New York
+      </span>
     </li>
     <li
       className="user-details__li --split-box"

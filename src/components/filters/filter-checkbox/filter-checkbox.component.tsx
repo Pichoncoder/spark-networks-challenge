@@ -7,9 +7,9 @@ const FilterCheckbox: React.FC<IFilterCheckboxProps> = (props: IFilterCheckboxPr
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => handleCheckbox(filter, e.target.checked);
 
   return (
-    <li className="filter-element checkbox-filter">
+    <li className={"filter-element checkbox-filter " + filter}>
       <label className="filter-element__text"> {text}
-        <input className="filter-element__checkbox" type="checkbox" onChange={handleOnChange} />
+        <input id={filter} name={filter} className="filter-element__checkbox" type="checkbox" onChange={handleOnChange} />
       </label>
     </li>
   );

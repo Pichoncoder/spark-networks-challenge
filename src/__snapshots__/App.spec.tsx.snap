@@ -1,0 +1,273 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterModule component #2 should render correctly 1`] = `
+<main>
+  <header>
+    Spark Network
+  </header>
+  <aside>
+    <ul
+      className="filters-wrapper"
+    >
+      <FilterCheckbox
+        filter="main_photo"
+        handleCheckbox={[Function]}
+        key="0"
+        text="Has Photo"
+      />
+      <FilterCheckbox
+        filter="favourite"
+        handleCheckbox={[Function]}
+        key="1"
+        text="Favourite"
+      />
+      <FilterCheckbox
+        filter="contacts_exchanged"
+        handleCheckbox={[Function]}
+        key="2"
+        text="In my Contacts"
+      />
+      <FilterCheckbox
+        filter="city_name"
+        handleCheckbox={[Function]}
+        key="3"
+        text="In my Location"
+      />
+      <FilterRange
+        filter="compatibility_score"
+        handleRange={[Function]}
+        key="4"
+        max={99}
+        min={1}
+        text="Compatibility Score"
+        value={Array []}
+      />
+      <FilterRange
+        filter="age"
+        handleRange={[Function]}
+        key="5"
+        max={95}
+        min={18}
+        text="Age"
+        value={Array []}
+      />
+      <FilterRange
+        filter="height_in_cm"
+        handleRange={[Function]}
+        key="6"
+        max={210}
+        min={135}
+        text="Height(cm)"
+        value={Array []}
+      />
+    </ul>
+  </aside>
+  <div
+    className="results-wrapper"
+  />
+</main>
+`;
+
+exports[`FilterModule main component #2 should render correctly 1`] = `
+<main>
+  <header>
+    Spark Network
+  </header>
+  <aside>
+    <ul
+      className="filters-wrapper"
+    >
+      <FilterCheckbox
+        filter="main_photo"
+        handleCheckbox={[Function]}
+        key="0"
+        text="Has Photo"
+      />
+      <FilterCheckbox
+        filter="favourite"
+        handleCheckbox={[Function]}
+        key="1"
+        text="Favourite"
+      />
+      <FilterCheckbox
+        filter="contacts_exchanged"
+        handleCheckbox={[Function]}
+        key="2"
+        text="In my Contacts"
+      />
+      <FilterCheckbox
+        filter="city_name"
+        handleCheckbox={[Function]}
+        key="3"
+        text="In my Location"
+      />
+      <FilterRange
+        filter="compatibility_score"
+        handleRange={[Function]}
+        key="4"
+        max={99}
+        min={1}
+        text="Compatibility Score"
+        value={Array []}
+      />
+      <FilterRange
+        filter="age"
+        handleRange={[Function]}
+        key="5"
+        max={95}
+        min={18}
+        text="Age"
+        value={Array []}
+      />
+      <FilterRange
+        filter="height_in_cm"
+        handleRange={[Function]}
+        key="6"
+        max={210}
+        min={135}
+        text="Height(cm)"
+        value={Array []}
+      />
+    </ul>
+  </aside>
+  <div
+    className="results-wrapper"
+  />
+</main>
+`;
+
+exports[`Square component #2 should render correctly 1`] = `
+<main>
+  <header>
+    Spark Network
+  </header>
+  <aside>
+    <ul
+      className="filters-wrapper"
+    >
+      <FilterCheckbox
+        filter="main_photo"
+        handleCheckbox={[Function]}
+        key="0"
+        text="Has Photo"
+      />
+      <FilterCheckbox
+        filter="favourite"
+        handleCheckbox={[Function]}
+        key="1"
+        text="Favourite"
+      />
+      <FilterCheckbox
+        filter="contacts_exchanged"
+        handleCheckbox={[Function]}
+        key="2"
+        text="In my Contacts"
+      />
+      <FilterCheckbox
+        filter="city_name"
+        handleCheckbox={[Function]}
+        key="3"
+        text="In my Location"
+      />
+      <FilterRange
+        filter="compatibility_score"
+        handleRange={[Function]}
+        key="4"
+        max={99}
+        min={1}
+        text="Compatibility Score"
+        value={Array []}
+      />
+      <FilterRange
+        filter="age"
+        handleRange={[Function]}
+        key="5"
+        max={95}
+        min={18}
+        text="Age"
+        value={Array []}
+      />
+      <FilterRange
+        filter="height_in_cm"
+        handleRange={[Function]}
+        key="6"
+        max={210}
+        min={135}
+        text="Height(cm)"
+        value={Array []}
+      />
+    </ul>
+  </aside>
+  <div
+    className="results-wrapper"
+  />
+</main>
+`;
+
+exports[`Square component should render correctly 1`] = `
+<main>
+  <header>
+    Spark Network
+  </header>
+  <aside>
+    <ul
+      className="filters-wrapper"
+    >
+      <FilterCheckbox
+        filter="main_photo"
+        handleCheckbox={[Function]}
+        key="0"
+        text="Has Photo"
+      />
+      <FilterCheckbox
+        filter="favourite"
+        handleCheckbox={[Function]}
+        key="1"
+        text="Favourite"
+      />
+      <FilterCheckbox
+        filter="contacts_exchanged"
+        handleCheckbox={[Function]}
+        key="2"
+        text="In my Contacts"
+      />
+      <FilterCheckbox
+        filter="city_name"
+        handleCheckbox={[Function]}
+        key="3"
+        text="In my Location"
+      />
+      <FilterRange
+        filter="compatibility_score"
+        handleRange={[Function]}
+        key="4"
+        max={99}
+        min={1}
+        text="Compatibility Score"
+        value={Array []}
+      />
+      <FilterRange
+        filter="age"
+        handleRange={[Function]}
+        key="5"
+        max={95}
+        min={18}
+        text="Age"
+        value={Array []}
+      />
+      <FilterRange
+        filter="height_in_cm"
+        handleRange={[Function]}
+        key="6"
+        max={210}
+        min={135}
+        text="Height(cm)"
+        value={Array []}
+      />
+    </ul>
+  </aside>
+  <div
+    className="results-wrapper"
+  />
+</main>
+`;

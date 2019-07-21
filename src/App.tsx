@@ -31,7 +31,7 @@ import {
 } from "./utils/filters/models";
 
 export default class FilterModule extends React.Component {
- 
+
   state: State = {
     data: [],
     filtered_data: [],
@@ -68,12 +68,12 @@ export default class FilterModule extends React.Component {
         });
   }
 
-  handleFilters(filter: string, value: any) {
+  handleFilters(filter: FiltersProperties, value: boolean | number[]) {
     const { filters }: State = this.state;
 
-    const hasRangeChanged = (prev: number[], _value: number[]) => _value[0] > prev[0] || _value[1] < prev[1];
+    const hasRangeChanged = (prev: number[], _value: number[]): boolean => _value[0] > prev[0] || _value[1] < prev[1];
 
-    const parseDecimal = (numberVal:number) =>parseFloat((numberVal / 100).toFixed(2));
+    const parseDecimal = (numberVal: number) => parseFloat((numberVal / 100).toFixed(2));
 
     let prevValues: number[];
 
@@ -90,7 +90,7 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(value, filters.has_photo.func));
+        }, () => this.checkFilters(value as boolean, filters.has_photo.func));
         break;
 
       case FiltersProperties.has_contact:
@@ -105,7 +105,7 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(value, filters.has_contact.func));
+        }, () => this.checkFilters(value as boolean, filters.has_contact.func));
         break;
 
       case FiltersProperties.is_favourite:
@@ -120,7 +120,7 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(value, filters.is_favourite.func));
+        }, () => this.checkFilters(value as boolean, filters.is_favourite.func));
         break;
       case FiltersProperties.in_my_location:
         this.setState((state: State) => {
@@ -134,7 +134,7 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(value, filters.in_my_location.func));
+        }, () => this.checkFilters(value as boolean, filters.in_my_location.func));
         break;
       case FiltersProperties.in_age_range:
         this.setState((state: State) => {
@@ -150,10 +150,10 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(hasRangeChanged(prevValues, value), filters.in_age_range.func));
+        }, () => this.checkFilters(hasRangeChanged(prevValues, value as number[]), filters.in_age_range.func));
         break;
       case FiltersProperties.in_compatibility_range:
-        const [min, max] = value;
+        const [min, max] = value as number[];
         const decimalValue: number[] = [parseDecimal(min), parseDecimal(max)];
 
         this.setState((state: State) => {
@@ -185,7 +185,7 @@ export default class FilterModule extends React.Component {
               }
             },
           };
-        }, () => this.checkFilters(hasRangeChanged(prevValues, value), filters.in_height_range.func));
+        }, () => this.checkFilters(hasRangeChanged(prevValues, value as number[]), filters.in_height_range.func));
         break;
     }
   }
@@ -201,7 +201,7 @@ export default class FilterModule extends React.Component {
       (new_filtered_data: FilteredData) => this.saveFilteredState(new_filtered_data));
   }
 
-  getFilteredData(value: string | boolean | number[], src_data: FilteredData, filterFunction: IFilterFunction, cb: Function) {
+  getFilteredData(value: boolean, src_data: FilteredData, filterFunction: IFilterFunction, cb: Function) {
     let ff: IFilterFunctions[] = (value) ? [filterFunction] as Array<IFilterFunctions> : this.getActiveFilters();
 
     return cb(this.applyFilters(src_data, ff, ff.length - 1));
@@ -212,9 +212,13 @@ export default class FilterModule extends React.Component {
     const filterFunctions: IFilterFunctions[] = [];
 
     Object.keys(filterTypes).forEach((props) => {
-      let { value, func } = filterTypes[props];
+      let { value, func, min, max } = filterTypes[props];
 
-      if (value && value.length !== 0) { //improve this
+      if (isArray(value)) {
+        if (value.length !== 0 && (value[0] !== min || value[1] !== max)) { // make sure it has not default values
+          filterFunctions.push(func);
+        }
+      } else if (value) {
         filterFunctions.push(func);
       }
     });
@@ -223,8 +227,6 @@ export default class FilterModule extends React.Component {
   }
 
   applyFilters(data: FilteredData, filterFunc: IFilterFunctions[], index: number): FilteredData {
-    //const ff: IFilterFunction = filterFunc.pop();
-
     if (index >= 0) { // -1 stop
       return this.applyFilters(data.filter((el: IUserDetails) => filterFunc[index](el)), filterFunc, index - 1);
     } else {
@@ -246,7 +248,7 @@ export default class FilterModule extends React.Component {
       key={index}
       filter={filter}
       text={text}
-      handleCheckbox={(filter: string, value: any) => this.handleFilters(filter, value)}>
+      handleCheckbox={(filter: FiltersProperties, value: any) => this.handleFilters(filter, value)}>
     </FilterCheckbox>
   }
 
@@ -258,7 +260,7 @@ export default class FilterModule extends React.Component {
       value={value}
       min={min}
       max={max}
-      handleRange={(filter: string, value: any) => this.handleFilters(filter, value)}>
+      handleRange={(filter: FiltersProperties, value: any) => this.handleFilters(filter, value)}>
     </FilterRange>
   }
 

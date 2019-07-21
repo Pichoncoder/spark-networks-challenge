@@ -13,7 +13,11 @@ describe('<UserDetails /> spec', () => {
             age: 33,
             job_title: 'Ninja',
             height_in_cm: 170,
-            city: 'US',
+            city: {
+              name: 'New York',
+              lat:54.00,
+              lon: -0.118092
+            },
             compatibility_score: 3,
             contacts_exchanged: 0,
             favourite: false,

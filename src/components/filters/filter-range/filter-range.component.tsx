@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { IFilterRangeProps } from "../../../types/index";
 import { Range } from "rc-slider";
 

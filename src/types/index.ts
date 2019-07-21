@@ -1,13 +1,13 @@
-import { Match } from "../../common/interfaces";
+import { Match } from '../../common/interfaces';
 
 export enum FiltersProperties {
-    has_photo = "main_photo",
-    has_contact = "contacts_exchanged",
-    is_favourite = "favourite",
-    in_compatibility_range = "compatibility_score",
-    in_age_range = "age",
-    in_height_range = "height_in_cm",
-    in_my_location = "city_name",
+    has_photo = 'main_photo',
+    has_contact = 'contacts_exchanged',
+    is_favourite = 'favourite',
+    in_compatibility_range = 'compatibility_score',
+    in_age_range = 'age',
+    in_height_range = 'height_in_cm',
+    in_my_location = 'city_name',
 }
 
 export type BooleanFilters = {
@@ -64,16 +64,16 @@ export type IFilteringFunctionDefault = {
 };
 
 export interface IFilterCheckboxProps {
-    handleCheckbox: (filter: string, value: any) => void;
-    filter: string;
+    handleCheckbox: (filter: FiltersProperties, value: any) => void;
+    filter: FiltersProperties;
     text: string;
 }
 
 export interface IFilterRangeProps {
-    handleRange: (filter: string, value: number[]) => void;
+    handleRange: (filter: FiltersProperties, value: number[]) => void;
     min: number;
     max: number;
-    filter: string;
+    filter: FiltersProperties;
     text: string;
     value: number[];
 }
