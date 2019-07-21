@@ -17,13 +17,6 @@ export type BooleanFilters = {
     func: (el: IUserDetails) => boolean;
 };
 
-export type StringFilters = {
-    filter: string;
-    text: string;
-    value: string,
-    func: (el: IUserDetails) => boolean;
-};
-
 export type NumericFilters = {
     filter: string;
     text: string;
