@@ -2,10 +2,18 @@
 
 exports[`<FilterRange /> spec Snapshot:renders the component 1`] = `
 <li
-  className="filter-element"
+  className="filter-element range-filter"
 >
-  <label>
+  <label
+    className="filter-element__text"
+  >
     Age
+     
+    <small>
+      [
+       - 
+      ]
+    </small>
     <div
       className="rc-slider"
       onBlur={[Function]}
@@ -69,9 +77,6 @@ exports[`<FilterRange /> spec Snapshot:renders the component 1`] = `
         className="rc-slider-mark"
       />
     </div>
-    <small>
-       - 
-    </small>
   </label>
 </li>
 `;

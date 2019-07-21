@@ -2,12 +2,15 @@
 
 exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
 <li
-  className="filter-element"
+  className="filter-element checkbox-filter"
 >
-  <label>
+  <label
+    className="filter-element__text"
+  >
      
     Photo
     <input
+      className="filter-element__checkbox"
       onChange={[Function]}
       type="checkbox"
     />

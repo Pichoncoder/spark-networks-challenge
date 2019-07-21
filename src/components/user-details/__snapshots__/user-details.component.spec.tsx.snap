@@ -53,6 +53,9 @@ exports[`<UserDetails /> spec Snapshot:check the component 1`] = `
       >
         Jew
       </span>
+      <span
+        className="user-details__city"
+      />
     </li>
     <li
       className="user-details__li --split-box"

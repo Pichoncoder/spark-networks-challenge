@@ -22,7 +22,7 @@ const UserDetails: React.FC<UserProps> = (props: UserProps) => {
             <ul className="user-details__box --buttom-info">
                 <li className="user-details__li --split-box">
                     <span className="user-details__religion">{props.details.religion}</span>
-                    {/* <span className="user-details__city">{props.details.city.name}</span> */}
+                    <span className="user-details__city">{props.details.city.name}</span> 
                 </li>
                 <li className="user-details__li --split-box">
                     <span className="user-details__age">{props.details.age}</span>

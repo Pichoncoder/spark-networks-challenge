@@ -3,6 +3,12 @@
 main {
    width: 100%;
    padding: 20px;
+   position: absolute;
+   height: 100%;
+}
+
+header {
+   height: 70px;
 }
 
 aside {
@@ -10,16 +16,42 @@ aside {
    width: 12%;
    border: 1px solid #cfcfcf;
    min-height: 500px;
-   margin: 100px 0px;
+   margin-right: 50px;
+
+   .filters-wrapper {
+      margin: 0;
+      list-style: none;
+      padding: 10px;
+
+      .filter-element {
+         font-size: 12px;
+         position: relative;
+         height: 15px;
+         padding: 10px 0;
+         font-weight: 400;
+
+         &.range-filter {
+            height: 25px;
+         }
+      }
+
+      .filter-element__checkbox {
+         position: absolute;
+         right: 0;
+      }
+
+      .filter-element__text {
+         
+      }
+   }
 }
 
 .results-wrapper { 
-   float: right; 
    width: 80%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 20px;
     align-items: stretch;
-    margin: 50px;
+
 }
 

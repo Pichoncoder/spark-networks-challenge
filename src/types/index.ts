@@ -1,6 +1,6 @@
-import { Data, Matches, Match } from "../../common/interfaces";
+import { Match } from "../../common/interfaces";
 
-export enum FiltersProperties  {
+export enum FiltersProperties {
     has_photo = "main_photo",
     has_contact = "contacts_exchanged",
     is_favourite = "favourite",
@@ -8,27 +8,13 @@ export enum FiltersProperties  {
     in_age_range = "age",
     in_height_range = "height_in_cm",
     in_my_location = "city_name",
-  }
-
-export interface FiltersTypes  {
-    has_photo: BooleanFilters;
-    is_favourite: BooleanFilters;
-    has_contact: BooleanFilters;
-    in_compatibility_range: NumericFilters;
-    in_height_range: NumericFilters;
-    in_age_range: NumericFilters;
-    in_my_location: BooleanFilters;
-}
-
-export interface FilterTypesKey {
-    [key: string]: any; // Add index signature
 }
 
 export type BooleanFilters = {
     filter: string;
     text: string;
     value: boolean,
-     func: (el: IUserDetails) => boolean;
+    func: (el: IUserDetails) => boolean;
 };
 
 export type StringFilters = {
@@ -47,6 +33,12 @@ export type NumericFilters = {
     func: IFilterFunction;
 };
 
+export type State = {
+    data: FilteredData,
+    filtered_data: FilteredData,
+    filters: FiltersTypes,
+};
+
 export interface IFilterFunction {
     (el: IUserDetails, value?: any): boolean;
 }
@@ -55,19 +47,13 @@ export interface IFilterFunctions extends Array<IFilterFunction> {
     (el: IUserDetails): boolean;
 }
 
-export type State = {
-    data: FilteredData,
-    filtered_data: FilteredData,
-    filters: FiltersTypes,
-};
-
 export interface FilteredData extends Array<Match> { }
 
 export interface UserProps {
     details: Match;
 }
 
-export interface IUserDetails extends Match {}
+export interface IUserDetails extends Match { }
 
 export type IFilteringFunction = {
     (el: IUserDetails | null, filter?: string): boolean | undefined
@@ -77,13 +63,13 @@ export type IFilteringFunctionDefault = {
     (el: IUserDetails | null, filter?: string): false;
 };
 
-export interface IFilterCheckboxProps  {
+export interface IFilterCheckboxProps {
     handleCheckbox: (filter: string, value: any) => void;
     filter: string;
     text: string;
 }
 
-export interface IFilterRangeProps  {
+export interface IFilterRangeProps {
     handleRange: (filter: string, value: number[]) => void;
     min: number;
     max: number;
@@ -92,3 +78,16 @@ export interface IFilterRangeProps  {
     value: number[];
 }
 
+export interface FiltersTypes {
+    has_photo: BooleanFilters;
+    is_favourite: BooleanFilters;
+    has_contact: BooleanFilters;
+    in_compatibility_range: NumericFilters;
+    in_height_range: NumericFilters;
+    in_age_range: NumericFilters;
+    in_my_location: BooleanFilters;
+}
+
+export interface FilterTypesKey {
+    [key: string]: any; // Add index signature
+}

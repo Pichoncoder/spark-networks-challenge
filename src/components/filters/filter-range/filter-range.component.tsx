@@ -8,13 +8,12 @@ const FilterRange: React.FC<IFilterRangeProps> = (props: IFilterRangeProps) => {
     const handleOnChange = (value: number[]) => handleRange(filter, value);
 
     return (
-        <li className="filter-element">
-            <label>{text}
+        <li className="filter-element range-filter">
+            <label className="filter-element__text">{text} <small>[{value[0]} - {value[1]}]</small>
                 <Range min={min}
                     max={max}
                     defaultValue={[min, max]}
                     onChange={handleOnChange} />
-                <small>{value[0]} - {value[1]}</small>
             </label>
         </li>
     );
