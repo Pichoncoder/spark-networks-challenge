@@ -8,7 +8,6 @@ import {
   FiltersProperties,
   IUserDetails,
   IFilterRangeProps,
-  FiltersTypes,
   IFilterCheckboxProps,
   IFilterFunctions,
   IFilterFunction,
@@ -123,7 +122,20 @@ export default class FilterModule extends React.Component {
           };
         }, () => this.checkFilters(value, filters.is_favourite.func));
         break;
-
+      case FiltersProperties.in_my_location:
+        this.setState((state: State) => {
+          return {
+            ...state,
+            filters: {
+              ...state.filters,
+              in_my_location: {
+                ...state.filters.in_my_location,
+                value
+              }
+            },
+          };
+        }, () => this.checkFilters(value, filters.in_my_location.func));
+        break;
       case FiltersProperties.in_age_range:
         this.setState((state: State) => {
           [...prevValues] = state.filters.in_age_range.value;
@@ -141,8 +153,8 @@ export default class FilterModule extends React.Component {
         }, () => this.checkFilters(hasRangeChanged(prevValues, value), filters.in_age_range.func));
         break;
       case FiltersProperties.in_compatibility_range:
-          const [min, max] = value;
-          const decimalValue: number[] = [parseDecimal(min), parseDecimal(max)];
+        const [min, max] = value;
+        const decimalValue: number[] = [parseDecimal(min), parseDecimal(max)];
 
         this.setState((state: State) => {
           [...prevValues] = state.filters.in_compatibility_range.value;
@@ -255,9 +267,9 @@ export default class FilterModule extends React.Component {
 
     return (
       <main>
-        <header></header>
+        <header>Spark Network</header>
         <aside>
-          <ul>
+          <ul className="filters-wrapper">
             {Object.keys(filters).map((type, index) => {
               const { value } = filters[type];
 
