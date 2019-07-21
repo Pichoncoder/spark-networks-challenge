@@ -1,13 +1,11 @@
-import { IUserDetails, StringFilters } from "../../../../types/index";
-import propertyFilter from "../../functions/property"
+import { IUserDetails, BooleanFilters } from "../../../../types/index";
+import comparisonFilter from "../../functions/comparison"
 
-const inMyLocation: StringFilters = {
+const inMyLocation: BooleanFilters = {
     filter: "city_name",
-    text: "distance in km",
-    value: '',
-    func: function (el: IUserDetails) {
-      return true;
-    }
+    text: "In my Location",
+    value: false,
+    func: (el: IUserDetails) => comparisonFilter(el.city.name, 'London'),
 }
 
 export default inMyLocation;

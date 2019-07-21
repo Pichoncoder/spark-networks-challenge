@@ -7,7 +7,7 @@ const inAgeRange: NumericFilters = {
     min: 18,
     max: 95,
     value: [],
-    func: (el: IUserDetails,  { in_age_range }: FiltersTypes) => rageFilter(el.age, in_age_range.value),
+    func: (el: IUserDetails, { in_age_range }: FiltersTypes) => rageFilter(el.age, in_age_range.value),
 }
 
 export default inAgeRange;
