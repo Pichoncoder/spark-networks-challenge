@@ -17,7 +17,7 @@ export interface FiltersTypes  {
     in_compatibility_range: NumericFilters;
     in_height_range: NumericFilters;
     in_age_range: NumericFilters;
-    in_my_location: StringFilters;
+    in_my_location: BooleanFilters;
 }
 
 export interface FilterTypesKey {
