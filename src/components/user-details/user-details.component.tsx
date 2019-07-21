@@ -21,16 +21,26 @@ const UserDetails: React.FC<UserProps> = (props: UserProps) => {
 
             <ul className="user-details__box --buttom-info">
                 <li className="user-details__li --split-box">
-                    <span className="user-details__religion">{props.details.religion}</span>
-                    <span className="user-details__city">{props.details.city.name}</span> 
+                    <strong>Location:</strong>
+                    <span className="user-details__city">{props.details.city.name}</span>
                 </li>
                 <li className="user-details__li --split-box">
+                    <strong>Religion:</strong>
+                    <span className="user-details__religion">{props.details.religion}</span>
+                </li>
+                <li className="user-details__li --split-box">
+                    <strong>Age:</strong>
                     <span className="user-details__age">{props.details.age}</span>
                     <br></br>
-                    <span className="user-details__height">{props.details.height_in_cm}</span>
+                    <strong>Height:</strong>
+                    <span className="user-details__height">{props.details.height_in_cm}cm</span>
                 </li>
-                <li className="user-details__li"><span className="user-details__contacts">{props.details.contacts_exchanged}</span></li>
-                <li className="user-details__li"><span className="user-details__score">{props.details.compatibility_score}</span></li>
+                <li className="user-details__li">
+                    <strong>Contacts in common:</strong>
+                    <span className="user-details__contacts">{props.details.contacts_exchanged}</span></li>
+                <li className="user-details__li">
+                    <strong>Score:</strong>
+                    <span className="user-details__score">{props.details.compatibility_score}</span></li>
             </ul>
         </div>);
 };

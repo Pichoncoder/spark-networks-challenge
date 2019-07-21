@@ -62,6 +62,9 @@ exports[`FilterModule main component #2 should render correctly 1`] = `
       />
     </ul>
   </aside>
+  <p>
+    No results found, try with diferent filters.
+  </p>
   <div
     className="results-wrapper"
   />

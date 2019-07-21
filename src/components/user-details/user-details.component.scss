@@ -27,10 +27,20 @@
         }
 
         &.--buttom-info {
+            text-align: left;
+            margin-top: 15px;
 
+            .user-details__li strong {
+                font-size: 11px;
+                margin-right: 3px;
+            }
+        
+            .user-details__li span {
+                float: right;
+            }
         }
     }
-    
+   
     .user-details__pic {
         margin-bottom: 20px;
     }
@@ -38,7 +48,6 @@
     .user-details__pic-img {
         max-width: 100%;
         border-radius: 50%;
-        visibility: hidden;
         height: 80px;
         width: 80px;
       }

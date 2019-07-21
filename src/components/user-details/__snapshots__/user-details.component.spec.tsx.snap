@@ -48,11 +48,9 @@ exports[`<UserDetails /> spec Snapshot:check the component 1`] = `
     <li
       className="user-details__li --split-box"
     >
-      <span
-        className="user-details__religion"
-      >
-        Jew
-      </span>
+      <strong>
+        Location:
+      </strong>
       <span
         className="user-details__city"
       >
@@ -62,21 +60,43 @@ exports[`<UserDetails /> spec Snapshot:check the component 1`] = `
     <li
       className="user-details__li --split-box"
     >
+      <strong>
+        Religion:
+      </strong>
+      <span
+        className="user-details__religion"
+      >
+        Jew
+      </span>
+    </li>
+    <li
+      className="user-details__li --split-box"
+    >
+      <strong>
+        Age:
+      </strong>
       <span
         className="user-details__age"
       >
         33
       </span>
       <br />
+      <strong>
+        Height:
+      </strong>
       <span
         className="user-details__height"
       >
         170
+        cm
       </span>
     </li>
     <li
       className="user-details__li"
     >
+      <strong>
+        Contacts in common:
+      </strong>
       <span
         className="user-details__contacts"
       >
@@ -86,6 +106,9 @@ exports[`<UserDetails /> spec Snapshot:check the component 1`] = `
     <li
       className="user-details__li"
     >
+      <strong>
+        Score:
+      </strong>
       <span
         className="user-details__score"
       >
