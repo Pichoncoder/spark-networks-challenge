@@ -1,4 +1,4 @@
-import {default as rageFilter} from './index';
+import { default as rageFilter } from "./index";
 
 const data = [{
   "display_name": "Caroline",
@@ -47,21 +47,21 @@ const data = [{
   "contacts_exchanged": 5,
   "favourite": false,
   "religion": "Christian"
-}]    
+}];
 
-test('Filters: Range compatibility_score', () => {
+test("Filters: Range compatibility_score", () => {
     const filtered = data.filter(el => rageFilter(el.compatibility_score, [0.55, 0.90]));
 
     expect(filtered.length).toBe(1);
   });
 
-  test('Filters: Range age', () => {
+  test("Filters: Range age", () => {
     const filtered = data.filter(el => rageFilter(el.age, [38, 41]));
 
     expect(filtered.length).toBe(2);
   });
 
-  test('Filters: Range height_in_cm', () => {
+  test("Filters: Range height_in_cm", () => {
     const filtered = data.filter(el => rageFilter(el.height_in_cm, [150, 170]));
 
     expect(filtered.length).toBe(2);

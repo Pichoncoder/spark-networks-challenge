@@ -1,6 +1,6 @@
-import React from 'react';
-import { isArray } from 'util';
-import './styles.scss';
+import React from "react";
+import { isArray } from "util";
+import "./styles.scss";
 
 // Types
 import {
@@ -12,12 +12,12 @@ import {
   IFilterFunctions,
   IFilterFunction,
   FilteredData
-} from './types';
+} from "./types";
 
 // Components
-import UserDetails from './components/user-details/user-details.component';
-import FilterCheckbox from './components/filters/filter-checkbox/filter-checkbox.component';
-import FilterRange from './components/filters/filter-range/filter-range.component';
+import UserDetails from "./components/user-details/user-details.component";
+import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
+import FilterRange from "./components/filters/filter-range/filter-range.component";
 
 // Models
 import {
@@ -28,7 +28,7 @@ import {
   in_age_range_model,
   in_compatibility_range_model,
   in_height_range_model
-} from './utils/filters/models';
+} from "./utils/filters/models";
 
 export default class FilterModule extends React.Component {
 
@@ -60,7 +60,7 @@ export default class FilterModule extends React.Component {
   }
 
   fetchMatches() {
-    fetch('/api/v1/matches')
+    fetch("/api/v1/matches")
       .then(res => res.json())
       .then(res => this.setState({ data: res.matches, filtered_data: res.matches }),
         (err) => {
@@ -202,7 +202,7 @@ export default class FilterModule extends React.Component {
   }
 
   getFilteredData(value: boolean, src_data: FilteredData, filterFunction: IFilterFunction, cb: Function) {
-    let ff: IFilterFunctions[] = (value) ? [filterFunction] as Array<IFilterFunctions> : this.getActiveFilters();
+    const ff: IFilterFunctions[] = (value) ? [filterFunction] as Array<IFilterFunctions> : this.getActiveFilters();
 
     return cb(this.applyFilters(src_data, ff, ff.length - 1));
   }
@@ -212,7 +212,7 @@ export default class FilterModule extends React.Component {
     const filterFunctions: IFilterFunctions[] = [];
 
     Object.keys(filterTypes).forEach((props) => {
-      let { value, func, min, max } = filterTypes[props];
+      const { value, func, min, max } = filterTypes[props];
 
       if (isArray(value)) {
         if (value.length !== 0 && (value[0] !== min || value[1] !== max)) { // make sure it has not default values
@@ -249,7 +249,7 @@ export default class FilterModule extends React.Component {
       filter={filter}
       text={text}
       handleCheckbox={(filter: FiltersProperties, value: any) => this.handleFilters(filter, value)}>
-    </FilterCheckbox>
+    </FilterCheckbox>;
   }
 
   getFilterRange({ filter, text, value, min, max }: IFilterRangeProps, index: number) {
@@ -261,7 +261,7 @@ export default class FilterModule extends React.Component {
       min={min}
       max={max}
       handleRange={(filter: FiltersProperties, value: any) => this.handleFilters(filter, value)}>
-    </FilterRange>
+    </FilterRange>;
   }
 
   render() {
@@ -271,7 +271,7 @@ export default class FilterModule extends React.Component {
       <main>
         <header>Spark Network</header>
         <aside>
-          <ul className='filters-wrapper'>
+          <ul className="filters-wrapper">
             {Object.keys(filters).map((type, index) => {
               const { value } = filters[type];
 
@@ -279,9 +279,9 @@ export default class FilterModule extends React.Component {
             })}
           </ul>
         </aside>
-        <p>{(filtered_data.length > 0) ? `Results: (${filtered_data.length})` : 'No results found, try with diferent filters.'}</p>
+        <p>{(filtered_data.length > 0) ? `Results: (${filtered_data.length})` : "No results found, try with diferent filters."}</p>
 
-        <div className='results-wrapper'>
+        <div className="results-wrapper">
           {filtered_data.map((match: IUserDetails, index: number) => {
             return <UserDetails details={match} key={index}></UserDetails>;
           })}

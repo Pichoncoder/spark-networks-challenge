@@ -1,4 +1,4 @@
-import {default as propertyFilter} from './index';
+import { default as propertyFilter } from "./index";
 
 const data = [{
   "display_name": "Caroline",
@@ -46,21 +46,21 @@ const data = [{
   "contacts_exchanged": 5,
   "favourite": false,
   "religion": "Christian"
-}]    
+}];
 
-test('Filter: by has Photo', () => {
+test("Filter: by has Photo", () => {
     const filtered = data.filter(el => propertyFilter(el.main_photo));
 
     expect(filtered.length).toBe(2);
   });
 
-  test('Filter: by has Exchanged Contact', () => {
+  test("Filter: by has Exchanged Contact", () => {
     const filtered = data.filter(el => propertyFilter(el.contacts_exchanged));
 
     expect(filtered.length).toBe(1);
   });
 
-  test('Filters: by Favourite', () => {
+  test("Filters: by Favourite", () => {
     const filtered = data.filter(el => propertyFilter(el.favourite));
 
     expect(filtered.length).toBe(1);

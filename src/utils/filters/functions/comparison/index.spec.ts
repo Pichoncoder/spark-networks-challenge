@@ -1,4 +1,4 @@
-import { default as comparasionFilter } from './index';
+import { default as comparasionFilter } from "./index";
 
 const data = [{
     "display_name": "Caroline",
@@ -46,10 +46,10 @@ const data = [{
     "contacts_exchanged": 5,
     "favourite": false,
     "religion": "Christian"
-}]
+}];
 
-test('Filter: by Location', () => {
-    const filtered = data.filter(el => comparasionFilter(el.city.name, 'Leeds'));
+test("Filter: by Location", () => {
+    const filtered = data.filter(el => comparasionFilter(el.city.name, "Leeds"));
 
     expect(filtered.length).toBe(2);
 });

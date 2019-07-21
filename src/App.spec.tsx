@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import FilterModule from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import FilterModule from "./App";
 import FilterCheckbox from "./components/filters/filter-checkbox/filter-checkbox.component";
 import FilterRange from "./components/filters/filter-range/filter-range.component";
 import UserDetails from "./components/user-details/user-details.component";
-import { create } from 'react-test-renderer';
-import { shallow, mount } from 'enzyme';
-import { FilteredData } from './types';
+import { create } from "react-test-renderer";
+import { shallow, mount } from "enzyme";
+import { FilteredData } from "./types";
 import { default as mockedData } from "../common/data/matches.json";
 
 function mockFetch(data: any) {
@@ -18,7 +18,7 @@ function mockFetch(data: any) {
   );
 }
 
-describe('FilterModule main component', () => {
+describe("FilterModule main component", () => {
   let wrapper: any;
   let component: any;
   let data: FilteredData;
@@ -29,22 +29,22 @@ describe('FilterModule main component', () => {
     data = mockedData.matches;
   });
 
-  it('#1 renders without crashing', () => {
-    const div = document.createElement('div');
+  it("#1 renders without crashing", () => {
+    const div = document.createElement("div");
     ReactDOM.render(<FilterModule />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it('#2 should render correctly', () => expect(wrapper).toMatchSnapshot());
+  it("#2 should render correctly", () => expect(wrapper).toMatchSnapshot());
 
-  it('#3 should render a <div />', () => {
-    const props: any = { text: "Has Photo", filter: 'main_photo' };
+  it("#3 should render a <div />", () => {
+    const props: any = { text: "Has Photo", filter: "main_photo" };
 
     const handleOnChange = (e: any, s: any) => true;
 
     const child = mount(<FilterCheckbox {...props} handleCheckbox={(e, s) => handleOnChange(e, s)}></FilterCheckbox>);
 
-    child.find('label > .filter-element__checkbox').simulate('change');
+    child.find("label > .filter-element__checkbox").simulate("change");
 
     expect(wrapper.state().filtered_data).toEqual(wrapper.state().data);
   });
@@ -70,7 +70,7 @@ describe('FilterModule main component', () => {
   });
 
   it("#5  Function applyFilters: filter with has_photo and has_contact ", () => {
-    let ff = [];
+    const ff = [];
 
     ff.push(wrapper.state().filters.has_photo.func);
     ff.push(wrapper.state().filters.has_contact.func);
@@ -80,11 +80,11 @@ describe('FilterModule main component', () => {
     expect(filtered).not.toHaveLength(data.length);
   });
 
-  it('#6 Active all boolean filters, get number of fitler functions and applied them', () => {
-    wrapper.instance().handleFilters('main_photo', true);
-    wrapper.instance().handleFilters('contacts_exchanged', true);
-    wrapper.instance().handleFilters('favourite', true);
-    wrapper.instance().handleFilters('city_name', true);
+  it("#6 Active all boolean filters, get number of fitler functions and applied them", () => {
+    wrapper.instance().handleFilters("main_photo", true);
+    wrapper.instance().handleFilters("contacts_exchanged", true);
+    wrapper.instance().handleFilters("favourite", true);
+    wrapper.instance().handleFilters("city_name", true);
 
     expect(wrapper.state().filters.has_photo.value).toBe(true);
     expect(wrapper.state().filters.has_contact.value).toBe(true);
@@ -102,10 +102,10 @@ describe('FilterModule main component', () => {
     });
   });
 
-  it('#7 Active all range filters, get fitler functions and applied them', () => {
-    wrapper.instance().handleFilters('height_in_cm', [140, 190]);
-    wrapper.instance().handleFilters('compatibility_score', [50, 99]);
-    wrapper.instance().handleFilters('age', [30, 70]);
+  it("#7 Active all range filters, get fitler functions and applied them", () => {
+    wrapper.instance().handleFilters("height_in_cm", [140, 190]);
+    wrapper.instance().handleFilters("compatibility_score", [50, 99]);
+    wrapper.instance().handleFilters("age", [30, 70]);
 
     expect(wrapper.state().filters.in_height_range.value).toEqual([140, 190]);
     expect(wrapper.state().filters.in_compatibility_range.value).toEqual([.5, .99]);
@@ -122,12 +122,12 @@ describe('FilterModule main component', () => {
     });
   });
 
-  it('#8 Active diferent filters type,  remove and apply one', () => {
+  it("#8 Active diferent filters type,  remove and apply one", () => {
     const { func } = wrapper.state().filters.has_photo;
 
-    wrapper.instance().handleFilters('height_in_cm', [140, 190]);
-    wrapper.instance().handleFilters('contacts_exchanged', true);
-    wrapper.instance().handleFilters('city_name', true);
+    wrapper.instance().handleFilters("height_in_cm", [140, 190]);
+    wrapper.instance().handleFilters("contacts_exchanged", true);
+    wrapper.instance().handleFilters("city_name", true);
 
     const ff = wrapper.instance().getActiveFilters();
     expect(ff).toHaveLength(3);
@@ -145,4 +145,4 @@ describe('FilterModule main component', () => {
       expect(new_filtered_data).toHaveLength(4);
     });
   });
-})
+});
