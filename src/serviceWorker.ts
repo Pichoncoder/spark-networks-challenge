@@ -1,3 +1,4 @@
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -68,6 +69,7 @@ function registerValidSW(swUrl: string, config?: Config) {
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
+        // eslint-disable-next-line
         if (installingWorker == undefined) {
           return;
         }
@@ -114,6 +116,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       const contentType = response.headers.get("content-type");
       if (
         response.status === 404 ||
+        // eslint-disable-next-line
         (contentType != undefined && contentType.indexOf("javascript") === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
