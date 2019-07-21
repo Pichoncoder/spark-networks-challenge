@@ -13,10 +13,11 @@ header {
 
 aside {
    float: left;
-   width: 12%;
    border: 1px solid #cfcfcf;
    min-height: 500px;
    margin-right: 50px;
+   float: left;
+   min-width: 200px;
 
    .filters-wrapper {
       margin: 0;
@@ -38,6 +39,7 @@ aside {
       .filter-element__checkbox {
          position: absolute;
          right: 0;
+         cursor: pointer;
       }
 
       .filter-element__text {

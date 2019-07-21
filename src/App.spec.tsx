@@ -96,16 +96,20 @@ describe('FilterModule main component', () => {
 
     const filtered: FilteredData = wrapper.instance().applyFilters(data, ff, ff.length - 1);
     expect(filtered).toHaveLength(1);
+
+    wrapper.instance().getFilteredData(false, data, ff, (new_filtered_data: FilteredData) => {
+      expect(new_filtered_data).toHaveLength(1);
+    });
   });
 
   it('#7 Active all range filters, get fitler functions and applied them', () => {
-    wrapper.instance().handleFilters('height_in_cm', [140,190]);
-    wrapper.instance().handleFilters('compatibility_score', [50,99]);
+    wrapper.instance().handleFilters('height_in_cm', [140, 190]);
+    wrapper.instance().handleFilters('compatibility_score', [50, 99]);
     wrapper.instance().handleFilters('age', [30, 70]);
 
-    expect(wrapper.state().filters.in_height_range.value).toEqual([140,190]);
-    expect(wrapper.state().filters.in_compatibility_range.value).toEqual([.5,.99]);
-    expect(wrapper.state().filters.in_age_range.value).toEqual([30,70]);
+    expect(wrapper.state().filters.in_height_range.value).toEqual([140, 190]);
+    expect(wrapper.state().filters.in_compatibility_range.value).toEqual([.5, .99]);
+    expect(wrapper.state().filters.in_age_range.value).toEqual([30, 70]);
 
     const ff = wrapper.instance().getActiveFilters();
     expect(ff).toHaveLength(3);
@@ -113,6 +117,32 @@ describe('FilterModule main component', () => {
     const filtered: FilteredData = wrapper.instance().applyFilters(data, ff, ff.length - 1);
     expect(filtered).toHaveLength(23);
 
-    wrapper.instace().getFilteredData()
+    wrapper.instance().getFilteredData(false, data, ff, (new_filtered_data: FilteredData) => {
+      expect(new_filtered_data).toHaveLength(23);
+    });
+  });
+
+  it('#8 Active diferent filters type,  remove and apply one', () => {
+    const { func } = wrapper.state().filters.has_photo;
+
+    wrapper.instance().handleFilters('height_in_cm', [140, 190]);
+    wrapper.instance().handleFilters('contacts_exchanged', true);
+    wrapper.instance().handleFilters('city_name', true);
+
+    const ff = wrapper.instance().getActiveFilters();
+    expect(ff).toHaveLength(3);
+
+    const filtered: FilteredData = wrapper.instance().applyFilters(data, ff, ff.length - 1);
+    expect(filtered).toHaveLength(4);
+
+    // apply filter from fitered data
+    wrapper.instance().getFilteredData(true, filtered, func, (new_filtered_data: FilteredData) => {
+      expect(new_filtered_data).toHaveLength(2);
+    });
+
+    // remove filter from src data
+    wrapper.instance().getFilteredData(false, data, func, (new_filtered_data: FilteredData) => {
+      expect(new_filtered_data).toHaveLength(4);
+    });
   });
 })

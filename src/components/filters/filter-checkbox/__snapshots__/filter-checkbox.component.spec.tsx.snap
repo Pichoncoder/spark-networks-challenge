@@ -2,7 +2,7 @@
 
 exports[`<FilterCheckbox /> spec 1#Click on checkbox and state update its value 1`] = `
 <li
-  className="filter-element checkbox-filter has_photo"
+  className="filter-element checkbox-filter main_photo"
 >
   <label
     className="filter-element__text"
@@ -11,8 +11,8 @@ exports[`<FilterCheckbox /> spec 1#Click on checkbox and state update its value 
     Photo
     <input
       className="filter-element__checkbox"
-      id="has_photo"
-      name="has_photo"
+      id="main_photo"
+      name="main_photo"
       onChange={[Function]}
       type="checkbox"
     />
@@ -22,7 +22,7 @@ exports[`<FilterCheckbox /> spec 1#Click on checkbox and state update its value 
 
 exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
 <li
-  className="filter-element checkbox-filter has_photo"
+  className="filter-element checkbox-filter main_photo"
 >
   <label
     className="filter-element__text"
@@ -31,8 +31,8 @@ exports[`<FilterCheckbox /> spec Snapshot:renders the component 1`] = `
     Photo
     <input
       className="filter-element__checkbox"
-      id="has_photo"
-      name="has_photo"
+      id="main_photo"
+      name="main_photo"
       onChange={[Function]}
       type="checkbox"
     />
